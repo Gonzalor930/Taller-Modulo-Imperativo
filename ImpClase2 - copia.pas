@@ -60,15 +60,10 @@ begin
 	writeln(v[diml]);
 	diml:= diml-1;
 	ImprimirVectorRecursivo (v,diml);
-end; 
-    
-function Sumar (v: vector; dimL: integer): integer; 
-begin
- pos:= 1;
- Sumar:= SumarRecursivo (v, pos, dimL); {manda el vector, la posicion incial y DIML}
+	end;
 end;
-
-  function SumarRecursivo (v: vector; pos, dimL: integer): integer;
+ 
+ function SumarRecursivo (v: vector; pos, dimL: integer): integer;
 
 		  Begin
 			if (pos <= dimL) {si la posicion no llego a diml hace esto}
@@ -76,37 +71,61 @@ end;
 			else SumarRecursivo:=0  {sino, SumaRecursivo devuelve 0}
 		  End;
  
-var pos: integer; 
+function Sumar (v:vector; dimL: integer): integer;
+{------------------------------------------------------------------------}
+	var pos: integer; 
+	begin
+	 pos:= 1;
+	 Sumar:= SumarRecursivo (v, pos, dimL); {manda el vector, la posicion incial y DIML}
+	end;
+
+ 
 
 
 function  ObtenerMaximo (v: vector; dimL: integer): integer;
 var maxRes:integer;
 begin
-    if (dimL= 1) then begin
-        ObtenerMaximo:=v[dimL]; // Caso base: solo un elemento
-    end;else
-        maxRes = ObtenerMaximo(v, dimL - 1);
+    if (dimL=0) then
+    ObtenerMaximo:=v[dimL] // Caso base: solo un elemento
+	else
+	maxRes := ObtenerMaximo(v, dimL - 1);
+    
         if (v[dimL - 1] > maxRes)then
-				ObtenerMaximo:= v[dimL - 1];
-        else
+				ObtenerMaximo:= v[dimL - 1]
+		else
             ObtenerMaximo:= maxRes;
-        end;
-    end;
 end;     
      
 function  BuscarValor (v: vector; dimL, valor: integer): boolean;
 begin
   if((dimL>0) and (v[dimL]=valor)) then
-	BuscarValor:=True;
+	BuscarValor:=True
 	else if(dimL>0)then
-		BuscarValor:= BuscarValor (v,dimL-1,valor);
+		BuscarValor:= BuscarValor (v,dimL-1,valor)
 	else BuscarValor:=False;
 end; 
 
-procedure ImprimirDigitos (v: vector; dimL: integer);
+procedure ImprimirDigitos(v: vector; dimL: integer); 
+var 
+  dig: integer;
 begin    
-     {-- Completar --}     
-end; 
+  if (dimL = 0) then begin
+    while (v[dimL] <> 0) do begin
+      dig := v[dimL] mod 10;
+      writeln(dig);
+      v[dimL] := v[dimL] div 10;
+    end;
+  end
+  else begin
+    while (v[dimL] <> 0) do begin
+      dig := v[dimL] mod 10;
+      writeln(dig);
+      v[dimL] := v[dimL] div 10;
+    end;
+    ImprimirDigitos(v, dimL - 1);
+  end;
+end;
+
 
 var dimL, suma, maximo, valor: integer; 
     v: vector;
